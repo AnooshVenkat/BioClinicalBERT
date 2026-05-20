@@ -11,11 +11,11 @@ This project implements a multi-label classification pipeline to detect **Advers
 ## Key Methodologies
 
 1.  **Transfer Learning & Regularization:**
-    * freezes embeddings and the bottom 10 layers of BERT to preserve pre-trained medical knowledge.
-    * Fine-tunes only the top 2 layers and classifier head.
+    * freezes embeddings and the bottom 6 layers of BERT to preserve pre-trained medical knowledge.
+    * Fine-tunes the top 6 layers and classifier head.
 2.  **Handling Imbalance:**
     * **Synthetic Augmentation:** Merges AI-generated synthetic sentences with real training data.
-    * **Cost-Sensitive Learning:** Uses `BCEWithLogitsLoss` with calculated `pos_weights` to penalize missing rare adverse events.
+    * **Cost-Sensitive Learning:** Uses `AsymmetricLoss`.
 
 ## Installation & Requirements
 
@@ -34,10 +34,10 @@ The pipeline requires two types of input data:
 
 ## Performance Results
 
-| Metric | Score | Interpretation |
-| :--- | :--- | :--- |
-| **Micro ROC-AUC** | **~0.94** | **Excellent Ranking.** The model successfully learns the semantics of adverse SDoH. |
-| **Micro F1** | **~0.13** | **Conservative Classification.** Due to extreme sparsity, the model is hesitant to predict positive labels, resulting in low recall. |
+| Metric | Score |
+| :--- | :--- | 
+| **Micro ROC-AUC** | **~0.93** | 
+| **Micro F1** | **~0.44** | 
 
 ## Usage
 
@@ -49,5 +49,4 @@ Run the training script (ensure GPU is available):
 # 2. Augments training set with synthetic data.
 # 3. Calculates class weights.
 # 4. Fine-tunes BioClinicalBERT (Frozen layers).
-# 5. Logs metrics to Weights & Biases (WandB).
 ```
